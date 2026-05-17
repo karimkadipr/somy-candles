@@ -1,0 +1,109 @@
+:root {
+    --soma-display: "Cormorant Garamond", "Newsreader", Georgia, serif;
+    --soma-body: "Newsreader", Georgia, serif;
+    --soma-mono: "JetBrains Mono", ui-monospace, monospace;
+    --soma-paper: #f4ecd8;
+    --soma-paper-2: #ece1cc;
+    --soma-ink: #2a1f17;
+    --soma-ink-soft: #6b574a;
+    --soma-line: #d4c5a8;
+    --soma-accent: #a85a4f;
+  }
+  * { box-sizing: border-box; }
+  html, body {
+    margin: 0;
+    padding: 0;
+    background: var(--soma-paper);
+    color: var(--soma-ink);
+    font-family: var(--soma-body);
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+  html, body { overflow-x: hidden; max-width: 100%; }
+  body {
+    background-image:
+      radial-gradient(circle at 20% 0%, rgba(168,90,79,0.04) 0%, transparent 40%),
+      radial-gradient(circle at 80% 100%, rgba(168,90,79,0.03) 0%, transparent 40%);
+  }
+  a { color: inherit; }
+  a:hover { opacity: 0.7; }
+  button:focus-visible, a:focus-visible, input:focus-visible, textarea:focus-visible {
+    outline: 2px solid var(--soma-accent);
+    outline-offset: 2px;
+  }
+  ::selection { background: var(--soma-accent); color: var(--soma-paper); }
+
+  @keyframes soma-fade {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+  @keyframes soma-rise {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes soma-marquee {
+    from { transform: translateX(0); }
+    to { transform: translateX(-33.333%); }
+  }
+
+  /* ============ Responsive ============ */
+  /* Tablet */
+  @media (max-width: 1100px) {
+    .soma-shop-grid { grid-template-columns: repeat(3, 1fr) !important; gap: 1.2rem !important; }
+    .soma-lookbook-grid { grid-template-columns: 1fr 1fr !important; grid-template-rows: 280px 280px 280px !important; gap: 1rem !important; }
+    .soma-lookbook-tile-hero { grid-row: auto !important; grid-column: 1 / -1 !important; }
+    .soma-hero-grid { gap: 2rem !important; }
+    .soma-craft-grid { grid-template-columns: 1fr !important; gap: 3rem !important; }
+    .soma-inquiry-grid { grid-template-columns: 1fr !important; gap: 2.5rem !important; }
+    .soma-inquiry-aside { position: static !important; }
+    .soma-footer-grid { grid-template-columns: 1.4fr 1fr 1fr !important; }
+    .soma-quickview-modal { grid-template-columns: 1fr !important; max-height: 96vh !important; }
+  }
+  /* Tablet — narrower */
+  @media (max-width: 1024px) {
+    .soma-hero-grid { grid-template-columns: 1fr !important; gap: 2rem !important; }
+    .soma-hero-photo { height: 56vh !important; min-height: 380px !important; }
+  }
+  @media (max-width: 860px) {
+    .soma-nav-row { grid-template-columns: 1fr 1fr !important; }
+    .soma-nav-left { display: none !important; }
+    .soma-hero-grid { grid-template-columns: 1fr !important; gap: 2rem !important; }
+    .soma-hero-photo { height: 56vh !important; min-height: 380px !important; }
+    .soma-shop-grid { grid-template-columns: repeat(2, 1fr) !important; gap: 1rem !important; }
+    .soma-section-pad { padding-top: 4.5rem !important; padding-bottom: 4.5rem !important; }
+    .soma-section-pad-x { padding-left: 1.4rem !important; padding-right: 1.4rem !important; }
+    .soma-shop-header { flex-direction: column !important; align-items: flex-start !important; }
+    .soma-lookbook-header { grid-template-columns: 1fr !important; }
+    .soma-footer-grid { grid-template-columns: 1fr 1fr !important; gap: 2rem !important; }
+    .soma-footer-bottom { flex-direction: column !important; align-items: flex-start !important; }
+    .soma-craft-aside { position: static !important; right: auto !important; bottom: auto !important; margin-top: 1rem !important; }
+    .soma-stats-row { gap: 1.4rem !important; flex-wrap: wrap !important; }
+    .soma-form { padding: 1.6rem !important; }
+    .soma-form-row { grid-template-columns: 1fr !important; }
+  }
+  /* Mobile */
+  @media (max-width: 560px) {
+    .soma-section-pad { padding-top: 3.5rem !important; padding-bottom: 3.5rem !important; }
+    .soma-section-pad-x { padding-left: 1.1rem !important; padding-right: 1.1rem !important; }
+    .soma-shop-grid { grid-template-columns: 1fr !important; gap: 1.4rem !important; }
+    .soma-lookbook-grid { grid-template-columns: 1fr !important; grid-template-rows: 260px 260px 260px 260px 260px !important; }
+    .soma-lookbook-tile-hero { grid-column: auto !important; }
+    .soma-footer-grid { grid-template-columns: 1fr !important; }
+    .soma-hero-headline { font-size: clamp(2.4rem, 11vw, 3.6rem) !important; }
+    .soma-quickview-modal { max-height: 100vh !important; }
+    .soma-quickview-details { padding: 2rem 1.4rem !important; }
+    .soma-quickview-gallery { padding: 1rem !important; }
+    .soma-cta-row { flex-direction: column !important; }
+    .soma-cta-row > a { width: 100% !important; text-align: center !important; }
+    .soma-handwritten-note { display: none !important; }
+    .soma-marquee-wrap { padding: 0.9rem 0 !important; }
+    .soma-tone-pill { font-size: 0.5rem !important; }
+    .soma-modal-overlay { padding: 0 !important; }
+    .soma-filter-row { overflow-x: auto !important; flex-wrap: nowrap !important; padding-bottom: 0.4rem; -webkit-overflow-scrolling: touch; margin: 0 -1.1rem; padding-left: 1.1rem !important; padding-right: 1.1rem !important; scrollbar-width: none; }
+    .soma-filter-row::-webkit-scrollbar { display: none; }
+    .soma-filter-row > button { white-space: nowrap; flex-shrink: 0; }
+  }
+  /* Touch devices: keep hover-only effects from sticking */
+  @media (hover: none) {
+    .soma-card .soma-quick-chip { opacity: 1 !important; transform: translateY(0) !important; }
+  }
