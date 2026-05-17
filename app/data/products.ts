@@ -8,8 +8,6 @@ export type PhotoTone =
   | "cream"
   | "dusk";
 
-export type Season = "printemps" | "été" | "automne" | "hiver";
-
 export type ProductSize = { label: string; price: number };
 
 export type Product = {
@@ -25,7 +23,7 @@ export type Product = {
   placeholderLabel: string;
   photoTone: PhotoTone;
   photo?: string;
-  season: Season;
+  collection: string;
   badge?: string;
 };
 
@@ -49,7 +47,7 @@ export const SOMA_PRODUCTS: Product[] = [
     photoTone: "rose",
     photo:
       "https://res.cloudinary.com/smartiniaaaaaa/image/upload/v1779030687/WhatsApp_Image_2026-05-10_at_18.30.52_1_t85yhq.jpg?_s=public-apps",
-    season: "printemps",
+    collection: "printemps-2026",
     badge: "Édition",
   },
   {
@@ -70,7 +68,7 @@ export const SOMA_PRODUCTS: Product[] = [
     photoTone: "butter",
     photo:
       "https://res.cloudinary.com/smartiniaaaaaa/image/upload/v1779030687/WhatsApp_Image_2026-05-10_at_18.30.52_2_mnlbj2.jpg?_s=public-apps",
-    season: "printemps",
+    collection: "printemps-2026",
   },
   {
     id: "bougie-03-lavande-de-sault",
@@ -90,7 +88,7 @@ export const SOMA_PRODUCTS: Product[] = [
     photoTone: "lavender",
     photo:
       "https://res.cloudinary.com/smartiniaaaaaa/image/upload/v1779030687/WhatsApp_Image_2026-05-10_at_18.30.52_favort.jpg?_s=public-apps",
-    season: "printemps",
+    collection: "printemps-2026",
   },
   {
     id: "bougie-04-camomille-des-pres",
@@ -109,7 +107,7 @@ export const SOMA_PRODUCTS: Product[] = [
     photoTone: "terracotta",
     photo:
       "https://res.cloudinary.com/smartiniaaaaaa/image/upload/v1779030687/WhatsApp_Image_2026-05-10_at_18.30.53_1_qhmfhv.jpg?_s=public-apps",
-    season: "printemps",
+    collection: "printemps-2026",
   },
   {
     id: "bougie-05-eucalyptus-blanc",
@@ -130,7 +128,7 @@ export const SOMA_PRODUCTS: Product[] = [
     photoTone: "ochre",
     photo:
       "https://res.cloudinary.com/smartiniaaaaaa/image/upload/v1779030687/WhatsApp_Image_2026-05-10_at_18.30.53_pnczyy.jpg?_s=public-apps",
-    season: "printemps",
+    collection: "eid-adhaa-2026",
   },
   {
     id: "bougie-06-mimosa-d-hiver",
@@ -150,7 +148,7 @@ export const SOMA_PRODUCTS: Product[] = [
     photoTone: "sage",
     photo:
       "https://res.cloudinary.com/smartiniaaaaaa/image/upload/v1779030687/WhatsApp_Image_2026-05-10_at_18.30.57_1_ravbpf.jpg?_s=public-apps",
-    season: "hiver",
+    collection: "hiver-2026",
   },
   {
     id: "bougie-07-jasmin-de-nuit",
@@ -170,7 +168,7 @@ export const SOMA_PRODUCTS: Product[] = [
     photoTone: "cream",
     photo:
       "https://res.cloudinary.com/smartiniaaaaaa/image/upload/v1779030687/WhatsApp_Image_2026-05-10_at_18.30.57_2_vay6wx.jpg?_s=public-apps",
-    season: "printemps",
+    collection: "printemps-2026",
     badge: "Saison",
   },
   {
@@ -190,7 +188,7 @@ export const SOMA_PRODUCTS: Product[] = [
     photoTone: "dusk",
     photo:
       "https://res.cloudinary.com/smartiniaaaaaa/image/upload/v1779030687/WhatsApp_Image_2026-05-10_at_18.30.57_3_mw6lkz.jpg?_s=public-apps",
-    season: "printemps",
+    collection: "printemps-2026",
   },
   {
     id: "bougie-09-iris-poudre",
@@ -211,7 +209,7 @@ export const SOMA_PRODUCTS: Product[] = [
     photoTone: "rose",
     photo:
       "https://res.cloudinary.com/smartiniaaaaaa/image/upload/v1779030688/WhatsApp_Image_2026-05-10_at_18.30.57_4_xetec9.jpg?_s=public-apps",
-    season: "printemps",
+    collection: "printemps-2026",
   },
   {
     id: "bougie-10-magnolia-ouvert",
@@ -231,7 +229,7 @@ export const SOMA_PRODUCTS: Product[] = [
     photoTone: "butter",
     photo:
       "https://res.cloudinary.com/smartiniaaaaaa/image/upload/v1779030688/WhatsApp_Image_2026-05-10_at_18.30.57_5_rupb8a.jpg?_s=public-apps",
-    season: "printemps",
+    collection: "printemps-2026",
   },
   {
     id: "bougie-11-tournesol-d-aout",
@@ -251,7 +249,7 @@ export const SOMA_PRODUCTS: Product[] = [
     photoTone: "lavender",
     photo:
       "https://res.cloudinary.com/smartiniaaaaaa/image/upload/v1779030687/WhatsApp_Image_2026-05-10_at_18.30.57_6_bvq3nc.jpg?_s=public-apps",
-    season: "été",
+    collection: "ete-2026",
   },
   {
     id: "bougie-12-muguet-du-1er-mai",
@@ -270,7 +268,7 @@ export const SOMA_PRODUCTS: Product[] = [
     photoTone: "terracotta",
     photo:
       "https://res.cloudinary.com/smartiniaaaaaa/image/upload/v1779030687/WhatsApp_Image_2026-05-10_at_18.30.57_7_ymokux.jpg?_s=public-apps",
-    season: "printemps",
+    collection: "eid-adhaa-2026",
   },
   {
     id: "bougie-13-hortensia-bleu",
@@ -291,7 +289,7 @@ export const SOMA_PRODUCTS: Product[] = [
     photoTone: "ochre",
     photo:
       "https://res.cloudinary.com/smartiniaaaaaa/image/upload/v1779030687/WhatsApp_Image_2026-05-10_at_18.30.57_8_xsjwaf.jpg?_s=public-apps",
-    season: "été",
+    collection: "ete-2026",
     badge: "Pièce unique",
   },
   {
@@ -312,7 +310,7 @@ export const SOMA_PRODUCTS: Product[] = [
     photoTone: "sage",
     photo:
       "https://res.cloudinary.com/smartiniaaaaaa/image/upload/v1779030687/WhatsApp_Image_2026-05-10_at_18.30.57_gsbrn8.jpg?_s=public-apps",
-    season: "automne",
+    collection: "automne-2026",
   },
   {
     id: "bougie-15-glycine-pendante",
@@ -332,7 +330,7 @@ export const SOMA_PRODUCTS: Product[] = [
     photoTone: "cream",
     photo:
       "https://res.cloudinary.com/smartiniaaaaaa/image/upload/v1779030688/WhatsApp_Image_2026-05-10_at_18.30.58_1_tfgaoy.jpg?_s=public-apps",
-    season: "printemps",
+    collection: "printemps-2026",
   },
   {
     id: "bougie-16-bleuet-sauvage",
@@ -351,7 +349,7 @@ export const SOMA_PRODUCTS: Product[] = [
     photoTone: "dusk",
     photo:
       "https://res.cloudinary.com/smartiniaaaaaa/image/upload/v1779030688/WhatsApp_Image_2026-05-10_at_18.30.58_2_lwmj39.jpg?_s=public-apps",
-    season: "printemps",
+    collection: "printemps-2026",
   },
   {
     id: "bougie-17-cosmos-rose",
@@ -372,7 +370,7 @@ export const SOMA_PRODUCTS: Product[] = [
     photoTone: "rose",
     photo:
       "https://res.cloudinary.com/smartiniaaaaaa/image/upload/v1779030688/WhatsApp_Image_2026-05-10_at_18.30.58_3_snwqjp.jpg?_s=public-apps",
-    season: "été",
+    collection: "ete-2026",
   },
   {
     id: "bougie-18-renoncule-beurre",
@@ -392,7 +390,7 @@ export const SOMA_PRODUCTS: Product[] = [
     photoTone: "butter",
     photo:
       "https://res.cloudinary.com/smartiniaaaaaa/image/upload/v1779030688/WhatsApp_Image_2026-05-10_at_18.30.58_4_bnvu7a.jpg?_s=public-apps",
-    season: "printemps",
+    collection: "printemps-2026",
   },
   {
     id: "bougie-19-dahlia-braise",
@@ -412,7 +410,7 @@ export const SOMA_PRODUCTS: Product[] = [
     photoTone: "lavender",
     photo:
       "https://res.cloudinary.com/smartiniaaaaaa/image/upload/v1779030688/WhatsApp_Image_2026-05-10_at_18.30.58_5_u8w1vg.jpg?_s=public-apps",
-    season: "été",
+    collection: "ete-2026",
     badge: "Cadeau",
   },
   {
@@ -432,7 +430,7 @@ export const SOMA_PRODUCTS: Product[] = [
     photoTone: "terracotta",
     photo:
       "https://res.cloudinary.com/smartiniaaaaaa/image/upload/v1779030688/WhatsApp_Image_2026-05-10_at_18.30.58_ylryu0.jpg?_s=public-apps",
-    season: "printemps",
+    collection: "eid-adhaa-2026",
   },
   {
     id: "bougie-21-capucine-vive",
@@ -453,7 +451,7 @@ export const SOMA_PRODUCTS: Product[] = [
     photoTone: "ochre",
     photo:
       "https://res.cloudinary.com/smartiniaaaaaa/image/upload/v1779030688/WhatsApp_Image_2026-05-10_at_18.31.35_1_w1mmk2.jpg?_s=public-apps",
-    season: "été",
+    collection: "ete-2026",
   },
   {
     id: "bougie-22-tubereuse",
@@ -473,7 +471,7 @@ export const SOMA_PRODUCTS: Product[] = [
     photoTone: "sage",
     photo:
       "https://res.cloudinary.com/smartiniaaaaaa/image/upload/v1779030688/WhatsApp_Image_2026-05-10_at_18.31.35_2_tuc3mm.jpg?_s=public-apps",
-    season: "automne",
+    collection: "automne-2026",
   },
   {
     id: "bougie-23-souci-dore",
@@ -493,7 +491,7 @@ export const SOMA_PRODUCTS: Product[] = [
     photoTone: "cream",
     photo:
       "https://res.cloudinary.com/smartiniaaaaaa/image/upload/v1779030688/WhatsApp_Image_2026-05-10_at_18.31.35_3_kp98cz.jpg?_s=public-apps",
-    season: "été",
+    collection: "ete-2026",
   },
   {
     id: "bougie-24-illet-ancien",
@@ -512,7 +510,7 @@ export const SOMA_PRODUCTS: Product[] = [
     photoTone: "dusk",
     photo:
       "https://res.cloudinary.com/smartiniaaaaaa/image/upload/v1779030689/WhatsApp_Image_2026-05-10_at_18.31.35_4_hpq2cq.jpg?_s=public-apps",
-    season: "automne",
+    collection: "automne-2026",
   },
   {
     id: "bougie-25-pensee-mauve",
@@ -533,7 +531,7 @@ export const SOMA_PRODUCTS: Product[] = [
     photoTone: "rose",
     photo:
       "https://res.cloudinary.com/smartiniaaaaaa/image/upload/v1779030689/WhatsApp_Image_2026-05-10_at_18.31.35_ta9dqy.jpg?_s=public-apps",
-    season: "printemps",
+    collection: "printemps-2026",
     badge: "Recharge",
   },
   {
@@ -554,7 +552,7 @@ export const SOMA_PRODUCTS: Product[] = [
     photoTone: "butter",
     photo:
       "https://res.cloudinary.com/smartiniaaaaaa/image/upload/v1779030689/WhatsApp_Image_2026-05-10_at_18.31.36_1_qgl913.jpg?_s=public-apps",
-    season: "été",
+    collection: "ete-2026",
   },
   {
     id: "bougie-27-achillee-millefeuille",
@@ -574,7 +572,7 @@ export const SOMA_PRODUCTS: Product[] = [
     photoTone: "lavender",
     photo:
       "https://res.cloudinary.com/smartiniaaaaaa/image/upload/v1779030689/WhatsApp_Image_2026-05-10_at_18.31.36_2_hjjrey.jpg?_s=public-apps",
-    season: "été",
+    collection: "eid-adhaa-2026",
   },
   {
     id: "bougie-28-gypsophile-nuage",
@@ -593,7 +591,7 @@ export const SOMA_PRODUCTS: Product[] = [
     photoTone: "terracotta",
     photo:
       "https://res.cloudinary.com/smartiniaaaaaa/image/upload/v1779030689/WhatsApp_Image_2026-05-10_at_18.31.36_3_fc9pw7.jpg?_s=public-apps",
-    season: "automne",
+    collection: "automne-2026",
   },
   {
     id: "bougie-29-statice-violet",
@@ -614,7 +612,7 @@ export const SOMA_PRODUCTS: Product[] = [
     photoTone: "ochre",
     photo:
       "https://res.cloudinary.com/smartiniaaaaaa/image/upload/v1779030689/WhatsApp_Image_2026-05-10_at_18.31.36_4_skkoae.jpg?_s=public-apps",
-    season: "automne",
+    collection: "automne-2026",
   },
   {
     id: "bougie-30-bouquet-d-ete",
@@ -634,7 +632,7 @@ export const SOMA_PRODUCTS: Product[] = [
     photoTone: "sage",
     photo:
       "https://res.cloudinary.com/smartiniaaaaaa/image/upload/v1779030689/WhatsApp_Image_2026-05-10_at_18.31.36_5_xotniq.jpg?_s=public-apps",
-    season: "été",
+    collection: "ete-2026",
   },
   {
     id: "bougie-31-bouquet-d-hiver",
@@ -654,7 +652,7 @@ export const SOMA_PRODUCTS: Product[] = [
     photoTone: "cream",
     photo:
       "https://res.cloudinary.com/smartiniaaaaaa/image/upload/v1779030689/WhatsApp_Image_2026-05-10_at_18.31.36_6_kq39nw.jpg?_s=public-apps",
-    season: "hiver",
+    collection: "hiver-2026",
     badge: "Édition",
   },
   {
@@ -674,7 +672,7 @@ export const SOMA_PRODUCTS: Product[] = [
     photoTone: "dusk",
     photo:
       "https://res.cloudinary.com/smartiniaaaaaa/image/upload/v1779030689/WhatsApp_Image_2026-05-10_at_18.31.36_urzjfn.jpg?_s=public-apps",
-    season: "automne",
+    collection: "automne-2026",
   },
   {
     id: "bougie-33-lavande-cedre",
@@ -695,7 +693,7 @@ export const SOMA_PRODUCTS: Product[] = [
     photoTone: "rose",
     photo:
       "https://res.cloudinary.com/smartiniaaaaaa/image/upload/v1779030689/WhatsApp_Image_2026-05-10_at_18.31.37_1_m38ltf.jpg?_s=public-apps",
-    season: "printemps",
+    collection: "printemps-2026",
   },
   {
     id: "bougie-34-rose-oud",
@@ -715,7 +713,7 @@ export const SOMA_PRODUCTS: Product[] = [
     photoTone: "butter",
     photo:
       "https://res.cloudinary.com/smartiniaaaaaa/image/upload/v1779030690/WhatsApp_Image_2026-05-10_at_18.31.37_2_rfwoia.jpg?_s=public-apps",
-    season: "printemps",
+    collection: "eid-adhaa-2026",
   },
   {
     id: "bougie-35-trio-decouverte",
@@ -735,7 +733,7 @@ export const SOMA_PRODUCTS: Product[] = [
     photoTone: "lavender",
     photo:
       "https://res.cloudinary.com/smartiniaaaaaa/image/upload/v1779030690/WhatsApp_Image_2026-05-10_at_18.31.37_3_yrjda7.jpg?_s=public-apps",
-    season: "printemps",
+    collection: "printemps-2026",
   },
   {
     id: "bougie-36-recharge-florale",
@@ -754,6 +752,6 @@ export const SOMA_PRODUCTS: Product[] = [
     photoTone: "terracotta",
     photo:
       "https://res.cloudinary.com/smartiniaaaaaa/image/upload/v1779030690/WhatsApp_Image_2026-05-10_at_18.31.37_cvikag.jpg?_s=public-apps",
-    season: "hiver",
+    collection: "hiver-2026",
   },
 ];

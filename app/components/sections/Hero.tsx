@@ -1,11 +1,16 @@
 import { PhotoPlaceholder } from "../PhotoPlaceholder";
+import { SOMA_PRODUCTS } from "../../data/products";
 
 export function Hero() {
   const stats: { n: string; l: string }[] = [
-    { n: "06", l: "fleurs de saison" },
-    { n: "42h", l: "de combustion" },
-    { n: "100%", l: "fait main, France" },
+    { n: "100%", l: "fait main" },
+    { n: "100%", l: "produit de qualité" },
   ];
+
+  const featured = SOMA_PRODUCTS.filter(
+    (p) => p.collection === "eid-adhaa-2026" && p.photo,
+  ).slice(0, 3);
+  const [hero, detail, atelier] = featured;
 
   return (
     <section
@@ -46,7 +51,7 @@ export function Hero() {
                 textTransform: "uppercase",
               }}
             >
-              Atelier · Grasse · 2019
+              Édition · Eid el Adha · 2026
             </span>
           </div>
           <h1
@@ -61,13 +66,13 @@ export function Hero() {
               color: "var(--soma-ink)",
             }}
           >
-            Des fleurs
+            Bougies fleuries
             <br />
             <em style={{ fontStyle: "italic", color: "var(--soma-accent)" }}>
-              cueillies à la main,
+              pour l'Aïd,
             </em>
             <br />
-            coulées dans la cire.
+            faites à la main.
           </h1>
           <p
             style={{
@@ -79,9 +84,8 @@ export function Hero() {
               maxWidth: 460,
             }}
           >
-            Soma compose des bougies fleuries en édition limitée. Chaque pièce est
-            unique : une saison, un bouquet, un parfum naturel — figés dans la cire de
-            soja, pour brûler doucement.
+            Une édition limitée pour l'Aïd el Adha. Chaque bougie est unique —
+            composée à la main dans notre atelier, prête à offrir aux invités.
           </p>
           <div
             className="soma-cta-row"
@@ -93,7 +97,7 @@ export function Hero() {
             }}
           >
             <a
-              href="/boutique"
+              href="/boutique?collection=eid-adhaa-2026"
               style={{
                 background: "var(--soma-ink)",
                 color: "var(--soma-paper)",
@@ -121,7 +125,7 @@ export function Hero() {
                 border: "1px solid var(--soma-ink)",
               }}
             >
-              Mariage & sur-mesure
+              Sur-mesure
             </a>
           </div>
           <div
@@ -171,12 +175,12 @@ export function Hero() {
             }}
           >
             <PhotoPlaceholder
-              tone="rose"
-              label="HERO · BOUGIE PIVOINE"
-              caption="lifestyle, lumière du matin"
+              tone={hero?.photoTone ?? "rose"}
+              label={hero ? `ÉDITION · ${hero.placeholderLabel}` : "ÉDITION EID"}
+              caption="édition de l'Aïd"
               ratio="auto"
               flourish="bouquet"
-              src="https://images.unsplash.com/photo-1572726729207-a78d6feb18d7?w=1200&q=80"
+              src={hero?.photo ?? null}
               style={{ height: "100%", width: "100%", aspectRatio: "auto" }}
             />
           </div>
@@ -191,10 +195,11 @@ export function Hero() {
             }}
           >
             <PhotoPlaceholder
-              tone="butter"
-              label="DÉTAIL · CAMOMILLE"
+              tone={detail?.photoTone ?? "butter"}
+              label={detail ? `DÉTAIL · ${detail.placeholderLabel}` : "DÉTAIL"}
               ratio="auto"
               flourish="petals"
+              src={detail?.photo ?? null}
               style={{ height: "100%", width: "100%", aspectRatio: "auto" }}
             />
           </div>
@@ -209,11 +214,11 @@ export function Hero() {
             }}
           >
             <PhotoPlaceholder
-              tone="sage"
-              label="ATELIER"
+              tone={atelier?.photoTone ?? "sage"}
+              label={atelier ? `ATELIER · ${atelier.placeholderLabel}` : "ATELIER"}
               ratio="auto"
               flourish="sprig"
-              src="https://images.unsplash.com/photo-1492552181161-62217fc3076d?w=600&q=80"
+              src={atelier?.photo ?? null}
               style={{ height: "100%", width: "100%", aspectRatio: "auto" }}
             />
           </div>

@@ -1,43 +1,32 @@
 import { useState, type ReactNode } from "react";
-import { SOMA_PRODUCTS, type Product, type Season } from "../../data/products";
-import { fmtDzd } from "../../lib/format";
+import { SOMA_PRODUCTS } from "../../data/products";
+import { ACTIVE_LOOKBOOK_COLLECTION } from "../../data/collections";
 import { PhotoPlaceholder } from "../PhotoPlaceholder";
+import { Lightbox, type LightboxImage } from "../Lightbox";
 
-const CURRENT_SEASON: Season = "printemps";
-const SEASON_YEAR = 2026;
-const SEASON_LABEL: Record<Season, string> = {
-  printemps: "printemps",
-  "été": "été",
-  automne: "automne",
-  hiver: "hiver",
-};
+type Flourish = "petals" | "bouquet" | "sprig";
 
 function LookbookTile({
   children,
-  productId,
-  onOpen,
   lookNumber,
+  productName,
+  onClick,
 }: {
   children: ReactNode;
-  productId: string;
-  onOpen: (p: Product) => void;
   lookNumber: string;
+  productName: string;
+  onClick: () => void;
 }) {
-  const product = SOMA_PRODUCTS.find((p) => p.id === productId);
   const [hover, setHover] = useState(false);
-
-  const handleClick = () => {
-    if (product) onOpen(product);
-  };
 
   return (
     <div
       onMouseEnter={() => setHover(true)}
       onMouseLeave={() => setHover(false)}
-      onClick={handleClick}
+      onClick={onClick}
       style={{
         position: "relative",
-        cursor: product ? "pointer" : "default",
+        cursor: "pointer",
         overflow: "hidden",
       }}
     >
@@ -45,107 +34,92 @@ function LookbookTile({
         style={{
           height: "100%",
           width: "100%",
-          transform: hover && product ? "scale(1.04)" : "scale(1)",
+          transform: hover ? "scale(1.04)" : "scale(1)",
           transition: "transform 1s cubic-bezier(0.2, 0.8, 0.2, 1)",
         }}
       >
         {children}
       </div>
 
-      {product && (
-        <>
-          <div
-            style={{
-              position: "absolute",
-              inset: 0,
-              background:
-                "linear-gradient(180deg, transparent 50%, rgba(20,12,8,0.65) 100%)",
-              pointerEvents: "none",
-            }}
-          />
-          <div
-            style={{
-              position: "absolute",
-              left: "1.1rem",
-              bottom: "1.1rem",
-              right: "1.1rem",
-              color: "#f4ecd8",
-              display: "flex",
-              alignItems: "flex-end",
-              justifyContent: "space-between",
-              gap: "1rem",
-            }}
-          >
-            <div style={{ minWidth: 0 }}>
-              <div
-                style={{
-                  fontFamily: "var(--soma-mono)",
-                  fontSize: "0.55rem",
-                  letterSpacing: "0.22em",
-                  textTransform: "uppercase",
-                  opacity: 0.75,
-                  marginBottom: 4,
-                }}
-              >
-                Look {lookNumber}
-              </div>
-              <div
-                style={{
-                  fontFamily: "var(--soma-display)",
-                  fontStyle: "italic",
-                  fontSize: "1.4rem",
-                  lineHeight: 1.05,
-                  textShadow: "0 1px 6px rgba(0,0,0,0.4)",
-                }}
-              >
-                {product.name}
-              </div>
-              <div
-                style={{
-                  fontFamily: "var(--soma-mono)",
-                  fontSize: "0.65rem",
-                  letterSpacing: "0.06em",
-                  marginTop: 4,
-                  textShadow: "0 1px 4px rgba(0,0,0,0.4)",
-                }}
-              >
-                {fmtDzd(product.price)}
-              </div>
-            </div>
-
-            <span
-              style={{
-                flexShrink: 0,
-                fontFamily: "var(--soma-mono)",
-                fontSize: "0.6rem",
-                letterSpacing: "0.22em",
-                padding: "0.55rem 0.8rem",
-                background: hover ? "var(--soma-paper)" : "rgba(244,236,216,0.18)",
-                backdropFilter: "blur(6px)",
-                color: hover ? "var(--soma-ink)" : "#f4ecd8",
-                border: "1px solid rgba(244,236,216,0.4)",
-                textTransform: "uppercase",
-                transition: "all 0.3s",
-                alignSelf: "flex-end",
-              }}
-            >
-              Acheter →
-            </span>
-          </div>
-        </>
-      )}
+      <div
+        style={{
+          position: "absolute",
+          inset: 0,
+          background:
+            "linear-gradient(180deg, transparent 50%, rgba(20,12,8,0.65) 100%)",
+          pointerEvents: "none",
+        }}
+      />
+      <div
+        style={{
+          position: "absolute",
+          left: "1.1rem",
+          bottom: "1.1rem",
+          right: "1.1rem",
+          color: "#f4ecd8",
+        }}
+      >
+        <div
+          style={{
+            fontFamily: "var(--soma-mono)",
+            fontSize: "0.55rem",
+            letterSpacing: "0.22em",
+            textTransform: "uppercase",
+            opacity: 0.75,
+            marginBottom: 4,
+          }}
+        >
+          Look {lookNumber}
+        </div>
+        <div
+          style={{
+            fontFamily: "var(--soma-display)",
+            fontStyle: "italic",
+            fontSize: "1.4rem",
+            lineHeight: 1.05,
+            textShadow: "0 1px 6px rgba(0,0,0,0.4)",
+          }}
+        >
+          {productName}
+        </div>
+      </div>
     </div>
   );
 }
 
-export function Lookbook({ onOpen }: { onOpen: (p: Product) => void }) {
-  const seasonProducts = SOMA_PRODUCTS.filter((p) => p.season === CURRENT_SEASON).slice(0, 5);
-  const flourishes = ["bouquet", "petals", "sprig", "bouquet", "sprig"] as const;
-  const looks = seasonProducts.map((p, i) => ({
+export function Lookbook() {
+  const collectionProducts = SOMA_PRODUCTS.filter(
+    (p) => p.collection === ACTIVE_LOOKBOOK_COLLECTION.slug,
+  ).slice(0, 5);
+
+  const flourishes: Flourish[] = ["bouquet", "petals", "sprig", "bouquet", "sprig"];
+
+  const looks = collectionProducts.map((p, i) => ({
     num: String(i + 1).padStart(2, "0"),
     product: p,
     flourish: flourishes[i % flourishes.length],
   }));
+
+  const lightboxImages: LightboxImage[] = looks.map((look) => ({
+    src: look.product.photo ?? null,
+    tone: look.product.photoTone,
+    flourish: look.flourish,
+    ratio: "4 / 5",
+    label: `${look.product.name} · LK ${look.num}`,
+  }));
+
+  const [activeIdx, setActiveIdx] = useState<number | null>(null);
+  const activeImage = activeIdx === null ? null : lightboxImages[activeIdx];
+  const open = (i: number) => setActiveIdx(i);
+  const close = () => setActiveIdx(null);
+  const prev = () =>
+    setActiveIdx((i) =>
+      i === null ? null : (i - 1 + lightboxImages.length) % lightboxImages.length,
+    );
+  const next = () =>
+    setActiveIdx((i) =>
+      i === null ? null : (i + 1) % lightboxImages.length,
+    );
 
   return (
     <section
@@ -175,7 +149,9 @@ export function Lookbook({ onOpen }: { onOpen: (p: Product) => void }) {
               margin: 0,
             }}
           >
-            Lookbook · Saison {SEASON_LABEL[CURRENT_SEASON]} {SEASON_YEAR} · {String(looks.length).padStart(2, "0")} looks
+            Lookbook · {ACTIVE_LOOKBOOK_COLLECTION.label}{" "}
+            {ACTIVE_LOOKBOOK_COLLECTION.year} ·{" "}
+            {String(looks.length).padStart(2, "0")} looks
           </p>
           <h2
             style={{
@@ -187,8 +163,11 @@ export function Lookbook({ onOpen }: { onOpen: (p: Product) => void }) {
               color: "var(--soma-ink)",
             }}
           >
-            Le mois de mai,{" "}
-            <em style={{ fontStyle: "italic", color: "var(--soma-accent)" }}>en cire</em>.
+            {ACTIVE_LOOKBOOK_COLLECTION.tagline},{" "}
+            <em style={{ fontStyle: "italic", color: "var(--soma-accent)" }}>
+              en cire
+            </em>
+            .
           </h2>
           <p
             style={{
@@ -199,11 +178,11 @@ export function Lookbook({ onOpen }: { onOpen: (p: Product) => void }) {
               fontStyle: "italic",
             }}
           >
-            Cliquez une image pour ajouter au panier.
+            Cliquez une image pour l'agrandir.
           </p>
         </div>
         <a
-          href="/boutique"
+          href="/lookbook"
           style={{
             fontFamily: "var(--soma-mono)",
             fontSize: "0.65rem",
@@ -216,7 +195,7 @@ export function Lookbook({ onOpen }: { onOpen: (p: Product) => void }) {
             paddingBottom: 4,
           }}
         >
-          Voir tout le shop →
+          Voir tout le lookbook →
         </a>
       </div>
 
@@ -243,9 +222,9 @@ export function Lookbook({ onOpen }: { onOpen: (p: Product) => void }) {
           return (
             <LookbookTile
               key={look.product.id}
-              productId={look.product.id}
-              onOpen={onOpen}
               lookNumber={look.num}
+              productName={look.product.name}
+              onClick={() => open(i)}
             >
               {i === 0 ? (
                 <div
@@ -261,6 +240,8 @@ export function Lookbook({ onOpen }: { onOpen: (p: Product) => void }) {
           );
         })}
       </div>
+
+      <Lightbox image={activeImage} onClose={close} onPrev={prev} onNext={next} />
     </section>
   );
 }

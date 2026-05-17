@@ -1,42 +1,10 @@
-import { useState } from "react";
 import { SOMA_PRODUCTS, type Product } from "../../data/products";
 import { ProductCard } from "../ProductCard";
 
-type Density = "airy" | "compact";
+const MAX_HOME_PRODUCTS = 9;
 
-export function ShopGrid({
-  onOpen,
-  density = "airy",
-}: {
-  onOpen: (p: Product) => void;
-  density?: Density;
-}) {
-  const [filter, setFilter] = useState("tout");
-
-  const isBouquet = (p: Product) => /^(Bouquet|Mélange)/i.test(p.name);
-  const isCadeau = (p: Product) =>
-    /^(Trio|Recharge|Coffret|Carte cadeau)/i.test(p.name) ||
-    p.badge === "Cadeau" ||
-    p.badge === "Recharge";
-  const isEdition = (p: Product) =>
-    p.badge === "Édition" || p.badge === "Pièce unique" || p.badge === "Saison";
-
-  const filters = [
-    { id: "tout", label: `Tout · ${SOMA_PRODUCTS.length}` },
-    { id: "fleur", label: "Mono-fleur" },
-    { id: "bouquet", label: "Bouquets" },
-    { id: "edition", label: "Éditions" },
-    { id: "cadeau", label: "Coffrets & cadeaux" },
-  ];
-
-  const filtered = SOMA_PRODUCTS.filter((p) => {
-    if (filter === "tout") return true;
-    if (filter === "edition") return isEdition(p);
-    if (filter === "bouquet") return isBouquet(p);
-    if (filter === "cadeau") return isCadeau(p);
-    if (filter === "fleur") return !isBouquet(p) && !isCadeau(p);
-    return true;
-  });
+export function ShopGrid({ onOpen }: { onOpen: (p: Product) => void }) {
+  const products = SOMA_PRODUCTS.slice(0, MAX_HOME_PRODUCTS);
 
   return (
     <section
@@ -67,7 +35,7 @@ export function ShopGrid({
               margin: 0,
             }}
           >
-            La boutique · {SOMA_PRODUCTS.length.toString().padStart(2, "0")} pièces
+            Tout notre catalogue · {String(SOMA_PRODUCTS.length).padStart(2, "0")} pièces
           </p>
           <h2
             style={{
@@ -79,37 +47,12 @@ export function ShopGrid({
               color: "var(--soma-ink)",
             }}
           >
-            Notre collection{" "}
+            Nos{" "}
             <em style={{ fontStyle: "italic", color: "var(--soma-accent)" }}>
-              de saison
+              produits
             </em>
             .
           </h2>
-        </div>
-        <div
-          className="soma-filter-row"
-          style={{ display: "flex", gap: "0.4rem", flexWrap: "wrap" }}
-        >
-          {filters.map((f) => (
-            <button
-              key={f.id}
-              onClick={() => setFilter(f.id)}
-              style={{
-                padding: "0.55rem 1rem",
-                background: filter === f.id ? "var(--soma-ink)" : "transparent",
-                color: filter === f.id ? "var(--soma-paper)" : "var(--soma-ink)",
-                border: "1px solid var(--soma-ink)",
-                fontFamily: "var(--soma-mono)",
-                fontSize: "0.65rem",
-                letterSpacing: "0.18em",
-                textTransform: "uppercase",
-                cursor: "pointer",
-                transition: "all 0.2s",
-              }}
-            >
-              {f.label}
-            </button>
-          ))}
         </div>
       </div>
 
@@ -117,29 +60,51 @@ export function ShopGrid({
         className="soma-shop-grid"
         style={{
           display: "grid",
-          gridTemplateColumns:
-            density === "compact" ? "repeat(4, 1fr)" : "repeat(3, 1fr)",
-          gap: density === "compact" ? "1rem" : "1.6rem",
+          gridTemplateColumns: "repeat(3, 1fr)",
+          gap: "1.6rem",
         }}
       >
-        {filtered.map((p) => (
-          <ProductCard key={p.id} product={p} onOpen={onOpen} density={density} />
+        {products.map((p) => (
+          <ProductCard key={p.id} product={p} onOpen={onOpen} density="airy" />
         ))}
       </div>
 
       <div
         style={{
-          marginTop: "3rem",
-          textAlign: "center",
-          fontFamily: "var(--soma-mono)",
-          fontSize: "0.65rem",
-          letterSpacing: "0.2em",
-          color: "var(--soma-ink-soft)",
-          textTransform: "uppercase",
+          marginTop: "3.5rem",
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          gap: "1rem",
         }}
       >
-        {filtered.length} pièce{filtered.length > 1 ? "s" : ""} affichée
-        {filtered.length > 1 ? "s" : ""} · livraison France &amp; Algérie
+        <div
+          style={{
+            fontFamily: "var(--soma-mono)",
+            fontSize: "0.65rem",
+            letterSpacing: "0.2em",
+            color: "var(--soma-ink-soft)",
+            textTransform: "uppercase",
+          }}
+        >
+          {products.length} / {SOMA_PRODUCTS.length} bougies
+        </div>
+        <a
+          href="/boutique"
+          style={{
+            background: "var(--soma-ink)",
+            color: "var(--soma-paper)",
+            padding: "1.1rem 2.4rem",
+            fontFamily: "var(--soma-mono)",
+            fontSize: "0.72rem",
+            letterSpacing: "0.24em",
+            textTransform: "uppercase",
+            textDecoration: "none",
+            transition: "opacity 0.2s",
+          }}
+        >
+          Voir toute la boutique →
+        </a>
       </div>
     </section>
   );

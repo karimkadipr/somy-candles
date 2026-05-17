@@ -6,8 +6,8 @@ import { SomaFooter } from "../components/SomaFooter";
 import { QuickView } from "../components/QuickView";
 import { Hero } from "../components/sections/Hero";
 import { Marquee } from "../components/sections/Marquee";
-import { Lookbook } from "../components/sections/Lookbook";
 import { ShopGrid } from "../components/sections/ShopGrid";
+import { Lookbook } from "../components/sections/Lookbook";
 import { CraftBand } from "../components/sections/CraftBand";
 import { Inquiry } from "../components/sections/Inquiry";
 
@@ -36,8 +36,8 @@ export default function Home() {
       <SomaNav current="home" />
       <Hero />
       <Marquee />
-      <Lookbook onOpen={setActiveProduct} />
-      <ShopGrid onOpen={setActiveProduct} density="airy" />
+      <ShopGrid onOpen={setActiveProduct} />
+      <Lookbook />
       <CraftBand />
       <Inquiry />
       <SomaFooter />

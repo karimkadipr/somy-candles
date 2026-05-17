@@ -1,6 +1,7 @@
 import { useState, type MouseEvent } from "react";
 import type { Product } from "../data/products";
 import { fmtDzd } from "../lib/format";
+import { whatsappLink } from "../lib/contact";
 import { PhotoPlaceholder } from "./PhotoPlaceholder";
 
 type Density = "airy" | "compact";
@@ -25,10 +26,9 @@ export function ProductCard({
         ? "sprig"
         : "petals";
 
-  const phone = "213555000000";
   const priceStr = fmtDzd(product.price);
-  const message = `Bonjour Soma, je suis intéressé(e) par la bougie « ${product.name} » (${priceStr}). Est-elle disponible ?`;
-  const waHref = `https://wa.me/${phone}?text=${encodeURIComponent(message)}`;
+  const message = `Bonjour Somy Candles, je suis intéressé(e) par la bougie « ${product.name} » (${priceStr}). Est-elle disponible ?`;
+  const waHref = whatsappLink(message);
 
   return (
     <article

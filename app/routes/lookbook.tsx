@@ -1,9 +1,11 @@
-import { useEffect, useState, type CSSProperties } from "react";
+import { useState } from "react";
 import type { Route } from "./+types/lookbook";
 import { SomaNav } from "../components/SomaNav";
 import { SomaFooter } from "../components/SomaFooter";
 import { PhotoPlaceholder } from "../components/PhotoPlaceholder";
+import { Lightbox } from "../components/Lightbox";
 import { LOOKBOOK_IMAGES, type LookbookImage } from "../data/lookbook";
+import { ACTIVE_LOOKBOOK_COLLECTION } from "../data/collections";
 
 export function meta(_: Route.MetaArgs) {
   return [
@@ -75,142 +77,21 @@ function MasonryItem({
   );
 }
 
-type LightboxBtnPos = "left" | "right" | "topright";
-
-function lightboxBtn(pos: LightboxBtnPos): CSSProperties {
-  const base: CSSProperties = {
-    position: "absolute",
-    width: 48,
-    height: 48,
-    background: "transparent",
-    border: "1px solid rgba(244,236,216,0.4)",
-    color: "var(--soma-paper)",
-    cursor: "pointer",
-    fontFamily: "var(--soma-mono)",
-    fontSize: "1.1rem",
-    borderRadius: "50%",
-    zIndex: 5,
-  };
-  if (pos === "left")
-    return { ...base, left: "2rem", top: "50%", transform: "translateY(-50%)" };
-  if (pos === "right")
-    return { ...base, right: "2rem", top: "50%", transform: "translateY(-50%)" };
-  return { ...base, top: "2rem", right: "2rem" };
-}
-
-function Lightbox({
-  image,
-  onClose,
-  onPrev,
-  onNext,
-}: {
-  image: LookbookImage | null;
-  onClose: () => void;
-  onPrev: () => void;
-  onNext: () => void;
-}) {
-  useEffect(() => {
-    if (!image) return;
-    const onKey = (e: KeyboardEvent) => {
-      if (e.key === "Escape") onClose();
-      if (e.key === "ArrowLeft") onPrev();
-      if (e.key === "ArrowRight") onNext();
-    };
-    window.addEventListener("keydown", onKey);
-    document.body.style.overflow = "hidden";
-    return () => {
-      window.removeEventListener("keydown", onKey);
-      document.body.style.overflow = "";
-    };
-  }, [image, onClose, onPrev, onNext]);
-
-  if (!image) return null;
-
-  return (
-    <div
-      onClick={onClose}
-      style={{
-        position: "fixed",
-        inset: 0,
-        background: "rgba(20,12,8,0.94)",
-        backdropFilter: "blur(8px)",
-        zIndex: 1000,
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-        padding: "3rem",
-        animation: "soma-fade 0.3s ease",
-      }}
-    >
-      <button
-        onClick={(e) => {
-          e.stopPropagation();
-          onPrev();
-        }}
-        aria-label="Précédent"
-        style={lightboxBtn("left")}
-      >
-        ←
-      </button>
-      <button
-        onClick={(e) => {
-          e.stopPropagation();
-          onNext();
-        }}
-        aria-label="Suivant"
-        style={lightboxBtn("right")}
-      >
-        →
-      </button>
-      <button
-        onClick={onClose}
-        aria-label="Fermer"
-        style={{ ...lightboxBtn("topright"), width: 40, height: 40 }}
-      >
-        ×
-      </button>
-
-      <div
-        onClick={(e) => e.stopPropagation()}
-        style={{
-          maxWidth: 1100,
-          maxHeight: "85vh",
-          width: "auto",
-          height: "85vh",
-          animation: "soma-rise 0.4s cubic-bezier(0.2, 0.8, 0.2, 1)",
-          aspectRatio: image.ratio,
-        }}
-      >
-        <PhotoPlaceholder
-          tone={image.tone}
-          label=""
-          src={image.src}
-          flourish={image.flourish}
-          ratio={image.ratio}
-          style={{ height: "100%", width: "100%" }}
-        />
-      </div>
-    </div>
-  );
-}
-
 export default function LookbookPage() {
+  const images = LOOKBOOK_IMAGES.filter(
+    (img) => img.collection === ACTIVE_LOOKBOOK_COLLECTION.slug,
+  );
   const [activeIdx, setActiveIdx] = useState<number | null>(null);
-  const active = activeIdx === null ? null : LOOKBOOK_IMAGES[activeIdx];
+  const active = activeIdx === null ? null : images[activeIdx];
 
-  const open = (img: LookbookImage) =>
-    setActiveIdx(LOOKBOOK_IMAGES.indexOf(img));
+  const open = (img: LookbookImage) => setActiveIdx(images.indexOf(img));
   const close = () => setActiveIdx(null);
   const prev = () =>
     setActiveIdx((i) =>
-      i === null
-        ? null
-        : (i - 1 + LOOKBOOK_IMAGES.length) % LOOKBOOK_IMAGES.length,
+      i === null ? null : (i - 1 + images.length) % images.length,
     );
   const next = () =>
-    setActiveIdx((i) =>
-      i === null ? null : (i + 1) % LOOKBOOK_IMAGES.length,
-    );
+    setActiveIdx((i) => (i === null ? null : (i + 1) % images.length));
 
   return (
     <div
@@ -241,7 +122,7 @@ export default function LookbookPage() {
             marginBottom: "1rem",
           }}
         >
-          Lookbook · {LOOKBOOK_IMAGES.length} images
+          Lookbook · {ACTIVE_LOOKBOOK_COLLECTION.label} {ACTIVE_LOOKBOOK_COLLECTION.year} · {String(images.length).padStart(2, "0")} images
         </div>
         <h1
           style={{
@@ -254,7 +135,7 @@ export default function LookbookPage() {
             color: "var(--soma-ink)",
           }}
         >
-          Printemps 2026.
+          {ACTIVE_LOOKBOOK_COLLECTION.tagline}.
         </h1>
       </section>
 
@@ -273,7 +154,7 @@ export default function LookbookPage() {
             columnGap: "1.1rem",
           }}
         >
-          {LOOKBOOK_IMAGES.map((img, i) => (
+          {images.map((img, i) => (
             <MasonryItem key={i} image={img} onClick={open} />
           ))}
         </div>

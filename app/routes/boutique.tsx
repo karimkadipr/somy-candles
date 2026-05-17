@@ -1,10 +1,12 @@
 import { useEffect, useState } from "react";
+import { useSearchParams } from "react-router";
 import type { Route } from "./+types/boutique";
 import { SomaNav } from "../components/SomaNav";
 import { SomaFooter } from "../components/SomaFooter";
 import { ProductCard } from "../components/ProductCard";
 import { QuickView } from "../components/QuickView";
 import { SOMA_PRODUCTS, type Product } from "../data/products";
+import { COLLECTIONS } from "../data/collections";
 
 type SortOption = "featured" | "name" | "price-asc" | "price-desc";
 
@@ -20,34 +22,32 @@ export function meta(_: Route.MetaArgs) {
 }
 
 export default function BoutiquePage() {
-  const [filter, setFilter] = useState("tout");
+  const [params, setParams] = useSearchParams();
+  const filter = params.get("collection") ?? "tout";
+  const setFilter = (id: string) => {
+    const next = new URLSearchParams(params);
+    if (id === "tout") next.delete("collection");
+    else next.set("collection", id);
+    setParams(next, { replace: true });
+  };
   const [visible, setVisible] = useState(9);
   const [activeProduct, setActiveProduct] = useState<Product | null>(null);
   const [sort, setSort] = useState<SortOption>("featured");
 
-  const isBouquet = (p: Product) => /^(Bouquet|Mélange)/i.test(p.name);
-  const isCadeau = (p: Product) =>
-    /^(Trio|Recharge|Coffret|Carte cadeau)/i.test(p.name) ||
-    p.badge === "Cadeau" ||
-    p.badge === "Recharge";
-  const isEdition = (p: Product) =>
-    p.badge === "Édition" || p.badge === "Pièce unique" || p.badge === "Saison";
-
   const filters = [
     { id: "tout", label: `Tout · ${SOMA_PRODUCTS.length}` },
-    { id: "fleur", label: "Mono-fleur" },
-    { id: "bouquet", label: "Bouquets" },
-    { id: "edition", label: "Éditions limitées" },
-    { id: "cadeau", label: "Coffrets & cadeaux" },
+    ...COLLECTIONS.map((c) => {
+      const count = SOMA_PRODUCTS.filter((p) => p.collection === c.slug).length;
+      return {
+        id: c.slug,
+        label: `${c.label} · ${String(count).padStart(2, "0")}`,
+      };
+    }),
   ];
 
   let filtered = SOMA_PRODUCTS.filter((p) => {
     if (filter === "tout") return true;
-    if (filter === "edition") return isEdition(p);
-    if (filter === "bouquet") return isBouquet(p);
-    if (filter === "cadeau") return isCadeau(p);
-    if (filter === "fleur") return !isBouquet(p) && !isCadeau(p);
-    return true;
+    return p.collection === filter;
   });
 
   if (sort === "price-asc") filtered = [...filtered].sort((a, b) => a.price - b.price);

@@ -140,19 +140,26 @@ function sizesFor(i, price) {
   return [{ label: "Moyen · 320g", price }];
 }
 
-function seasonFor(name, i) {
+// Override: these product indexes are assigned to Eid Adhaa regardless of
+// what the name heuristic would otherwise pick. Edit this list to move
+// products in or out of the Eid Adhaa collection.
+const EID_ADHAA_INDEXES = new Set([4, 11, 19, 26, 33]);
+
+function collectionFor(name, i) {
+  if (EID_ADHAA_INDEXES.has(i)) return "eid-adhaa-2026";
   const n = name.toLowerCase();
-  if (/hiver|mimosa|recharge/.test(n)) return "hiver";
+  if (/hiver|mimosa|recharge/.test(n)) return "hiver-2026";
   if (/été|tournesol|hortensia|cosmos|dahlia|capucine|souci|marguerite|achillée|août/.test(n))
-    return "été";
-  if (/automne|mélange séché|gypsophile|statice|tubéreuse|œillet|pavot/.test(n)) return "automne";
+    return "ete-2026";
+  if (/automne|mélange séché|gypsophile|statice|tubéreuse|œillet|pavot/.test(n))
+    return "automne-2026";
   if (
     /printemps|muguet|pivoine|iris|rose|lavande|magnolia|jasmin|renoncule|anémone|pensée|violette|bleuet|glycine|camomille|eucalyptus|trio|coffret/.test(
       n,
     )
   )
-    return "printemps";
-  return ["printemps", "été", "automne", "hiver"][i % 4];
+    return "printemps-2026";
+  return ["printemps-2026", "ete-2026", "automne-2026", "hiver-2026"][i % 4];
 }
 
 const products = urls.slice(0, NAMES.length).map((url, i) => {
@@ -164,7 +171,7 @@ const products = urls.slice(0, NAMES.length).map((url, i) => {
   const scents = SCENT_POOLS[tone];
   const sizes = sizesFor(i, price);
   const badge = i % 6 === 0 ? BADGES[(i / 6) % BADGES.length] : undefined;
-  const season = seasonFor(name, i);
+  const collection = collectionFor(name, i);
 
   return {
     id: `bougie-${String(i + 1).padStart(2, "0")}-${slugify(name)}`,
@@ -179,7 +186,7 @@ const products = urls.slice(0, NAMES.length).map((url, i) => {
     placeholderLabel: name.toUpperCase(),
     photoTone: tone,
     photo: url,
-    season,
+    collection,
     ...(badge ? { badge } : {}),
   };
 });
@@ -209,7 +216,7 @@ ${sizes},
     photoTone: ${JSON.stringify(p.photoTone)},
     photo:
       ${JSON.stringify(p.photo)},
-    season: ${JSON.stringify(p.season)},${p.badge ? `\n    badge: ${JSON.stringify(p.badge)},` : ""}
+    collection: ${JSON.stringify(p.collection)},${p.badge ? `\n    badge: ${JSON.stringify(p.badge)},` : ""}
   }`;
   })
   .join(",\n");
@@ -223,8 +230,6 @@ const productsHeader = `export type PhotoTone =
   | "sage"
   | "cream"
   | "dusk";
-
-export type Season = "printemps" | "été" | "automne" | "hiver";
 
 export type ProductSize = { label: string; price: number };
 
@@ -241,7 +246,7 @@ export type Product = {
   placeholderLabel: string;
   photoTone: PhotoTone;
   photo?: string;
-  season: Season;
+  collection: string;
   badge?: string;
 };
 
@@ -263,16 +268,16 @@ const lookbookEntries = urls
     const ratio = RATIOS[i % RATIOS.length];
     const flourish = FLOURISHES[i % FLOURISHES.length];
     const label = String(i + 1).padStart(2, "0");
-    const season = seasonFor(NAMES[i] || `Image ${i + 1}`, i);
+    const collection = collectionFor(NAMES[i] || `Image ${i + 1}`, i);
     return `  { label: ${JSON.stringify(label)}, tone: ${JSON.stringify(
       tone,
     )}, flourish: ${JSON.stringify(flourish)}, ratio: ${JSON.stringify(
       ratio,
-    )}, season: ${JSON.stringify(season)}, src: ${JSON.stringify(url)} }`;
+    )}, collection: ${JSON.stringify(collection)}, src: ${JSON.stringify(url)} }`;
   })
   .join(",\n");
 
-const lookbookFile = `import type { PhotoTone, Season } from "./products";
+const lookbookFile = `import type { PhotoTone } from "./products";
 
 export type Flourish = "petals" | "bouquet" | "sprig";
 
@@ -281,7 +286,7 @@ export type LookbookImage = {
   tone: PhotoTone;
   flourish: Flourish;
   ratio: string;
-  season: Season;
+  collection: string;
   src: string;
 };
 
