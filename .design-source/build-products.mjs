@@ -95,16 +95,29 @@ const NOTE_POOLS = {
   dusk: [["Fleurs séchées", "Foin", "Bois doux"], ["Rose noire", "Patchouli", "Encens"]],
 };
 
-const SCENT_POOLS = {
-  rose: ["Rose poudrée", "Rose & oud", "Rose neutre"],
-  butter: ["Camomille pure", "Camomille & miel"],
-  lavender: ["Lavande nature", "Lavande & cèdre"],
-  terracotta: ["Bouquet original", "Pivoine seule"],
-  ochre: ["Immortelle pure", "Tournesol & miel"],
-  sage: ["Eucalyptus frais", "Coton doux"],
-  cream: ["Magnolia", "Mix doux"],
-  dusk: ["Composition mixte", "Foin & bois"],
-};
+// Universal scent list. Each product picks 2–4 of these cyclically — edit
+// products.ts manually after generation to override per product.
+const SCENTS = [
+  "VANILLA MINT",
+  "Cassis",
+  "PINEAPPLE",
+  "JASMINe",
+  "Fresh Abricot",
+  "BERRY BLISS",
+  "peach",
+  "green apple",
+  "coquelicot",
+  "black cherry",
+];
+
+function scentsFor(i) {
+  const count = 2 + (i % 3); // 2, 3, or 4 scents per product
+  const out = [];
+  for (let k = 0; k < count; k++) {
+    out.push(SCENTS[(i * 3 + k) % SCENTS.length]);
+  }
+  return out;
+}
 
 const BADGES = ["Édition", "Saison", "Pièce unique", "Cadeau", "Recharge"];
 
@@ -118,26 +131,17 @@ function slugify(name) {
 }
 
 function sizesFor(i, price) {
-  if (i % 4 === 0) {
-    return [
-      { label: "Petit · 180g", price: Math.round(price * 0.7) },
-      { label: "Moyen · 320g", price },
-      { label: "Grand · 540g", price: Math.round(price * 1.55) },
-    ];
-  }
-  if (i % 4 === 1) {
-    return [
-      { label: "Petit · 180g", price: Math.round(price * 0.8) },
-      { label: "Moyen · 320g", price },
-    ];
-  }
-  if (i % 4 === 2) {
-    return [
-      { label: "Moyen · 320g", price },
-      { label: "Grand · 540g", price: Math.round(price * 1.5) },
-    ];
-  }
-  return [{ label: "Moyen · 320g", price }];
+  // "Avec boîte" carries a packaging markup over "Sans boîte" (the base price).
+  const sansBoite = price;
+  const avecBoite = price + 12;
+
+  // Distribute formats per product so some have one option, most have both.
+  if (i % 5 === 0) return [{ label: "Avec boîte", price: avecBoite }];
+  if (i % 5 === 1) return [{ label: "Sans boîte", price: sansBoite }];
+  return [
+    { label: "Avec boîte", price: avecBoite },
+    { label: "Sans boîte", price: sansBoite },
+  ];
 }
 
 // Override: these product indexes are assigned to Eid Adhaa regardless of
@@ -168,7 +172,7 @@ const products = urls.slice(0, NAMES.length).map((url, i) => {
   const price = PRICES[i % PRICES.length];
   const subtitle = SUBTITLES[i % SUBTITLES.length];
   const notes = NOTE_POOLS[tone][i % NOTE_POOLS[tone].length];
-  const scents = SCENT_POOLS[tone];
+  const scents = scentsFor(i);
   const sizes = sizesFor(i, price);
   const badge = i % 6 === 0 ? BADGES[(i / 6) % BADGES.length] : undefined;
   const collection = collectionFor(name, i);

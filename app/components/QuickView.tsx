@@ -11,14 +11,14 @@ export function QuickView({
   product: Product | null;
   onClose: () => void;
 }) {
-  const [sizeIdx, setSizeIdx] = useState(0);
+  const [formatIdx, setFormatIdx] = useState(0);
   const [scentIdx, setScentIdx] = useState(0);
   const [zoom, setZoom] = useState(false);
   const [zoomPos, setZoomPos] = useState({ x: 50, y: 50 });
 
   useEffect(() => {
     if (!product) return;
-    setSizeIdx(0);
+    setFormatIdx(0);
     setScentIdx(0);
     const onKey = (e: KeyboardEvent) => e.key === "Escape" && onClose();
     window.addEventListener("keydown", onKey);
@@ -31,15 +31,15 @@ export function QuickView({
 
   if (!product) return null;
 
-  const currentSize = product.sizes[sizeIdx];
-  const currentPrice = currentSize.price;
+  const currentFormat = product.formats[formatIdx];
+  const currentPrice = currentFormat.price;
   const currentScent = product.scents[scentIdx];
   const priceStr = fmtDzd(currentPrice);
 
   const orderMessage = [
     `Bonjour Somy Candles, je souhaite commander la bougie « ${product.name} ».`,
     "",
-    `Format : ${currentSize.label}`,
+    `Format : ${currentFormat.label}`,
     `Parfum : ${currentScent}`,
     `Prix : ${priceStr}`,
   ].join("\n");
@@ -236,38 +236,6 @@ export function QuickView({
             {product.blurb}
           </p>
 
-          <div style={{ borderTop: "1px solid var(--soma-line)", paddingTop: "1.1rem" }}>
-            <p
-              style={{
-                fontFamily: "var(--soma-mono)",
-                fontSize: "0.6rem",
-                letterSpacing: "0.2em",
-                color: "var(--soma-ink-soft)",
-                margin: "0 0 0.6rem",
-                textTransform: "uppercase",
-              }}
-            >
-              Notes olfactives
-            </p>
-            <div style={{ display: "flex", flexWrap: "wrap", gap: "0.4rem" }}>
-              {product.notes.map((n) => (
-                <span
-                  key={n}
-                  style={{
-                    fontFamily: "var(--soma-body)",
-                    fontStyle: "italic",
-                    fontSize: "0.95rem",
-                    padding: "0.3rem 0.7rem",
-                    border: "1px solid var(--soma-line)",
-                    borderRadius: 999,
-                  }}
-                >
-                  {n}
-                </span>
-              ))}
-            </div>
-          </div>
-
           <div>
             <div style={{ display: "flex", justifyContent: "space-between", marginBottom: "0.6rem" }}>
               <span
@@ -289,27 +257,27 @@ export function QuickView({
                   color: "var(--soma-ink-soft)",
                 }}
               >
-                {product.sizes[sizeIdx].label}
+                {product.formats[formatIdx].label}
               </span>
             </div>
             <div
               style={{
                 display: "grid",
-                gridTemplateColumns: `repeat(${product.sizes.length}, 1fr)`,
+                gridTemplateColumns: `repeat(${product.formats.length}, 1fr)`,
                 gap: "0.5rem",
               }}
             >
-              {product.sizes.map((s, i) => (
+              {product.formats.map((s, i) => (
                 <button
                   key={s.label}
-                  onClick={() => setSizeIdx(i)}
+                  onClick={() => setFormatIdx(i)}
                   style={{
                     padding: "0.7rem 0.5rem",
                     border:
-                      sizeIdx === i
+                      formatIdx === i
                         ? "1.5px solid var(--soma-ink)"
                         : "1px solid var(--soma-line)",
-                    background: sizeIdx === i ? "var(--soma-paper-2)" : "transparent",
+                    background: formatIdx === i ? "var(--soma-paper-2)" : "transparent",
                     cursor: "pointer",
                     fontFamily: "var(--soma-mono)",
                     fontSize: "0.7rem",
@@ -318,7 +286,7 @@ export function QuickView({
                     transition: "all 0.2s",
                   }}
                 >
-                  {s.label.split(" · ")[0]}
+                  {s.label}
                   <div
                     style={{
                       fontSize: "0.6rem",

@@ -33,27 +33,6 @@ export function Hero() {
         }}
       >
         <div style={{ paddingTop: "2rem" }}>
-          <div
-            style={{
-              display: "flex",
-              alignItems: "center",
-              gap: "0.7rem",
-              marginBottom: "1.5rem",
-            }}
-          >
-            <span style={{ width: 36, height: 1, background: "var(--soma-accent)" }} />
-            <span
-              style={{
-                fontFamily: "var(--soma-mono)",
-                fontSize: "0.62rem",
-                letterSpacing: "0.28em",
-                color: "var(--soma-accent)",
-                textTransform: "uppercase",
-              }}
-            >
-              Édition · Eid el Adha · 2026
-            </span>
-          </div>
           <h1
             className="soma-hero-headline"
             style={{
@@ -68,10 +47,6 @@ export function Hero() {
           >
             Bougies fleuries
             <br />
-            <em style={{ fontStyle: "italic", color: "var(--soma-accent)" }}>
-              pour l'Aïd,
-            </em>
-            <br />
             faites à la main.
           </h1>
           <p
@@ -84,8 +59,8 @@ export function Hero() {
               maxWidth: 460,
             }}
           >
-            Une édition limitée pour l'Aïd el Adha. Chaque bougie est unique —
-            composée à la main dans notre atelier, prête à offrir aux invités.
+            Des bougies fleuries en édition limitée. Chaque pièce est unique —
+            composée fleur par fleur dans notre atelier, pour brûler doucement.
           </p>
           <div
             className="soma-cta-row"
@@ -97,7 +72,7 @@ export function Hero() {
             }}
           >
             <a
-              href="/boutique?collection=eid-adhaa-2026"
+              href="/boutique?collection=aid"
               style={{
                 background: "var(--soma-ink)",
                 color: "var(--soma-paper)",

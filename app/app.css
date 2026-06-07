@@ -1,2 +1,15 @@
 @import "tailwindcss";
 @import "./soma.css";
+
+@theme {
+  --color-paper: #f4ecd8;
+  --color-paper-2: #ece1cc;
+  --color-ink: #2a1f17;
+  --color-ink-soft: #6b574a;
+  --color-line: #d4c5a8;
+  --color-accent: #a85a4f;
+
+  --font-display: "Cormorant Garamond", "Newsreader", Georgia, serif;
+  --font-body: "Newsreader", Georgia, serif;
+  --font-mono: "JetBrains Mono", ui-monospace, monospace;
+}

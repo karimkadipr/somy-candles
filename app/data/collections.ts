@@ -9,36 +9,36 @@ export type Collection = {
 
 export const COLLECTIONS: Collection[] = [
   {
-    slug: "printemps-2026",
-    label: "Printemps",
+    slug: "mariage",
+    label: "Mariage",
     year: 2026,
-    tagline: "Le mois de mai",
+    tagline: "Pour le grand jour",
     active: true,
     activeLookbook: true,
   },
   {
-    slug: "ete-2026",
-    label: "Été",
+    slug: "naissance",
+    label: "Naissance",
     year: 2026,
-    tagline: "Soleil et fleurs hautes",
+    tagline: "Bienvenue au monde",
   },
   {
-    slug: "automne-2026",
-    label: "Automne",
+    slug: "aid",
+    label: "Aïd",
     year: 2026,
-    tagline: "Fleurs séchées, lumière basse",
+    tagline: "Pour l'Aïd",
   },
   {
-    slug: "hiver-2026",
-    label: "Hiver",
+    slug: "bouquet",
+    label: "Bouquet",
     year: 2026,
-    tagline: "Mimosa et veillées",
+    tagline: "Bouquets composés",
   },
   {
-    slug: "eid-adhaa-2026",
-    label: "Eid Adhaa",
+    slug: "decoratives",
+    label: "Décoratives",
     year: 2026,
-    tagline: "Édition de l'Aïd",
+    tagline: "Touche florale",
   },
 ];
 
