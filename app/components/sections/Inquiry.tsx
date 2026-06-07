@@ -74,7 +74,7 @@ export function Inquiry() {
   };
 
   const offers: [string, string][] = [
-    ["Mariage", "à partir de 28€ / pièce · 30 pièces minimum"],
+    ["Mariage", "à partir de 15 pièces minimum"],
     ["Événement d'entreprise", "devis sur demande · personnalisation logo"],
     ["Cadeau intime", "édition unique · à partir d'une pièce"],
   ];
@@ -135,7 +135,7 @@ export function Inquiry() {
           >
             Reproduire votre bouquet de mariée en bougie fleurie, ou créer un cadeau
             d'invité unique pour votre événement. Nous travaillons sur devis, à
-            partir de 30 pièces, avec un délai de 8 semaines.
+            partir de 15 pièces, avec un délai de 10 jours.
           </p>
 
           <div style={{ marginTop: "2.4rem", display: "grid", gap: "1.2rem" }}>

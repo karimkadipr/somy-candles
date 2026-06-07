@@ -6,6 +6,12 @@ export function Marquee() {
     "Édition limitée saisonnière",
     "Livraison neutre en carbone",
     "Atelier ouvert sur rendez-vous",
+    "Composition florale décorative",
+    "Six étapes faites main",
+    "Pour mariage, naissance et Aïd",
+    "Parfums au choix",
+    "Coffret cadeau sur demande",
+    "Commande sur WhatsApp",
   ];
   const repeated = [...items, ...items, ...items];
 

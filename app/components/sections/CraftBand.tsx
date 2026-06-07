@@ -2,12 +2,12 @@ import { PhotoPlaceholder } from "../PhotoPlaceholder";
 
 export function CraftBand() {
   const steps: [string, string, string][] = [
-    ["01", "Cueillir", "à la main, à l'aube"],
-    ["02", "Sécher", "deux semaines, à l'ombre"],
-    ["03", "Composer", "fleur par fleur, dans le moule"],
-    ["04", "Couler", "cire de soja à 62°C"],
-    ["05", "Mécher", "coton centré à la pince"],
-    ["06", "Signer", "étiquette manuscrite"],
+    ["01", "Fonte", "de la cire à la température idéale"],
+    ["02", "Préparation", "et fixation de la mèche dans le moule"],
+    ["03", "Composition", "décorative — fleurs, design, éléments"],
+    ["04", "Coulage", "de la cire colorée"],
+    ["05", "Stabilisation", "et refroidissement complet"],
+    ["06", "Démoulage", "finition et étiquetage à la main"],
   ];
 
   return (
@@ -106,7 +106,7 @@ export function CraftBand() {
             Six étapes,
             <br />
             <em style={{ fontStyle: "italic", color: "var(--soma-accent)" }}>
-              aucune machine.
+              entièrement faites à la main.
             </em>
           </h2>
           <p
@@ -118,9 +118,10 @@ export function CraftBand() {
               marginBottom: "2rem",
             }}
           >
-            Cueillette à l'aube. Séchage tête en bas, deux semaines au minimum.
-            Composition florale dans le moule. Coulage de la cire à 62°C. Mèche
-            centrée à la pince. Étiquette manuscrite.
+            Fonte de la cire à la bonne température. Préparation et fixation de la
+            mèche dans le moule. Composition décorative — fleurs, design, éléments.
+            Coulage de la cire colorée. Stabilisation et refroidissement complet.
+            Démoulage, finition et étiquetage à la main.
           </p>
 
           <ol
